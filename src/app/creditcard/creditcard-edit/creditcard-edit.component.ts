@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { CreditCardService } from './../creditcard.service';
+import { CreditCard } from '../creditcard.model';
 
 @Component({
   selector: 'app-creditcard-edit',
@@ -13,7 +14,7 @@ export class CreditcardEditComponent implements OnInit {
   editMode: boolean = false;
   id: number;
   ccForm: FormGroup;
-  editedCard: import("h:/Angular-Projects/Angular6/expo-app/src/app/creditcard/creditcard.model").CreditCard;
+  editedCard: CreditCard;
 
   constructor(
     private route: ActivatedRoute,
