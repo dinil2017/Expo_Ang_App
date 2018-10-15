@@ -1,0 +1,35 @@
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>{{ card.bank }}</h1>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-xs-12">
+        <h3>{{ card.cardHolder }}</h3>
+      </div>
+      <div class="col-xs-12">
+          <h4>{{ card.cardNo }}</h4>
+        </div>
+        <div class="col-xs-12">
+          <h4>Due Amount : <strong>{{ card.dueAmount }}</strong></h4>
+          <h4>Due Date: {{ card.dueDate | date }}</h4>
+        </div>
+      </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div
+        class="btn-group"
+        appDropdown>
+        <button
+          type="button"
+          class="btn btn-primary dropdown-toggle">
+          Manage Card <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a style="cursor: pointer;" (click)="onEditCard()">Edit Card</a></li>
+          <li><a style="cursor: pointer;" (click)="onDeleteCard()">Delete Card</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+

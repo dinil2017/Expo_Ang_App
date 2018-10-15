@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-xs-12">
+      <form [formGroup]="ccForm" (ngSubmit)="onSubmit()">
+        <div>
+          <label for="cardNo">Card Number</label>
+          <input id="cardNo" formControlName="cardNo" type="number" class="form-control">
+          <label for="bank">Bank</label>
+          <input id="bank" formControlName="bank" type="text" class="form-control" >
+          <label for="cardHolder">Card Holder</label>
+          <input id="cardHolder" formControlName="cardHolder" type="text" class="form-control">
+          <label for="expiryDate">Expiry Date</label>
+          <input id="expiryDate" formControlName="expiryDate" type="date" class="form-control">
+          <label for="limit">Limit</label>
+          <input id="limit" formControlName="limit" type="number" class="form-control">
+          <label for="dueAmount">Due Amount</label>
+          <input id="dueAmount" formControlName="dueAmount" type="number" class="form-control">
+          <label for="dueDate">Due Date</label>
+          <input id="dueDate" formControlName="dueDate" type="date" class="form-control">
+        </div>
+        <br>
+        <div>
+          <button class="btn btn-primary animate" type="submit">{{editMode ? 'Update' : 'Add'}}</button>
+        </div>
+      </form>
+    </div>
+</div>
+

@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-xs-12">
+    <button class="btn btn-success animate" (click)="onNewCard()">New Card</button>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-xs-12">
+    <app-creditcard-item *ngFor="let card of cards; let i = index"
+    [card]="card" [index]="i"></app-creditcard-item>
+  </div>
+</div>
