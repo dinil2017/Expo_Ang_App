@@ -12,10 +12,23 @@ export class ExpenseComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router) { }
 
-  ngOnInit() {
-  }
+  public data : any 
 
+  ngOnInit() {
+    this.data = [
+    {'expDate':new Date(), 'expItem': 'testItem1', 'expAmount' :'34', 'expRemark':'Noida' },
+    {'expDate':new Date(), 'expItem' :'testItem2', 'expAmount' :'34', 'expRemark':'Noida' },
+    {'expDate':new Date(), 'expItem' :'testItem3', 'expAmount' :'34', 'expRemark':'Noida' },
+    {'expDate':new Date(), 'expItem' :'testItem4', 'expAmount' :'34', 'expRemark':'Noida' },
+    {'expDate':new Date(), 'expItem' :'testItem5', 'expAmount' :'34', 'expRemark':'Noida' },
+    {'expDate':new Date(), 'expItem' :'testItem6', 'expAmount' :'34', 'expRemark':'Noida' },
+    {'expDate':new Date(), 'expItem' :'testItem7', 'expAmount' :'34', 'expRemark':'Noida' },
+    {'expDate':new Date(), 'expItem' :'testItem8', 'expAmount' :'34', 'expRemark':'Noida' },
+    {'expDate':new Date(), 'expItem' :'testItem9', 'expAmount' :'34', 'expRemark':'Noida' }
+   ]
+  }
   onEdit() {
+    this.data.push({'expDate':new Date(), 'expItem': 'NEWWWW', 'expAmount' :'34', 'expRemark':'Noida' });
     this.router.navigate(['edit'], {relativeTo: this.route});
   }
 
