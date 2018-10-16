@@ -1,7 +1,7 @@
 <!-- <div class="profile-image" style="height:auto"
      [ngStyle]="{ 'background-image': 'url(' + bgImgUrl + ')'}"> -->
     <div>
-      <button class="btn btn-success" style="margin-left: 15px" (click)="onEdit()">Add Expense</button>
+      <button class="btn btn-success" (click)="onAddExpense()">Add Expense</button>
     </div>
     <hr>
     <div class="row">
@@ -32,8 +32,8 @@
           <td>{{exp.expRemark}}</td>
           <td>
             <div class="row">
-              <button type="button" class="btn btn-default glyphicon glyphicon-pencil" (click)="onEdit()"></button>            
-              <button type="button" class="btn btn-default glyphicon glyphicon-trash" style="margin-left: 2px" (click)="onEdit()"></button>
+              <button type="button" class="btn btn-default btn-sm glyphicon glyphicon-pencil" (click)="onEdit()"></button>            
+              <button type="button" class="btn btn-default btn-sm glyphicon glyphicon-trash" style="margin-left: 2px" (click)="onEdit()"></button>
             </div>
           </td>
       </tr>

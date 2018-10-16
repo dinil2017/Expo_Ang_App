@@ -16,20 +16,24 @@ export class ExpenseComponent implements OnInit {
 
   ngOnInit() {
     this.data = [
-    {'expDate':new Date(), 'expItem': 'testItem1', 'expAmount' :'34', 'expRemark':'Noida' },
-    {'expDate':new Date(), 'expItem' :'testItem2', 'expAmount' :'34', 'expRemark':'Noida' },
-    {'expDate':new Date(), 'expItem' :'testItem3', 'expAmount' :'34', 'expRemark':'Noida' },
-    {'expDate':new Date(), 'expItem' :'testItem4', 'expAmount' :'34', 'expRemark':'Noida' },
-    {'expDate':new Date(), 'expItem' :'testItem5', 'expAmount' :'34', 'expRemark':'Noida' },
-    {'expDate':new Date(), 'expItem' :'testItem6', 'expAmount' :'34', 'expRemark':'Noida' },
-    {'expDate':new Date(), 'expItem' :'testItem7', 'expAmount' :'34', 'expRemark':'Noida' },
-    {'expDate':new Date(), 'expItem' :'testItem8', 'expAmount' :'34', 'expRemark':'Noida' },
-    {'expDate':new Date(), 'expItem' :'testItem9', 'expAmount' :'34', 'expRemark':'Noida' }
+    {'expDate':new Date(), 'expItem': 'monthly', 'expAmount' :'1250', 'expRemark':'Sep-18' },
+    {'expDate':new Date(), 'expItem' :'shopping', 'expAmount' :'100', 'expRemark':'Lulu' },
+    {'expDate':new Date(), 'expItem' :'flight ticket', 'expAmount' :'1500', 'expRemark':'Onam' },
+    {'expDate':new Date(), 'expItem' :'shopping', 'expAmount' :'340', 'expRemark':'' },
+    {'expDate':new Date(), 'expItem' :'movie', 'expAmount' :'70', 'expRemark':'Koode' },
+    {'expDate':new Date(), 'expItem' :'fuel', 'expAmount' :'100', 'expRemark':'' },
+    {'expDate':new Date(), 'expItem' :'dewa', 'expAmount' :'550', 'expRemark':'Aug-18' },
+    {'expDate':new Date(), 'expItem' :'etisalat', 'expAmount' :'300', 'expRemark':'Aug-18' },
+    {'expDate':new Date(), 'expItem' :'fuel', 'expAmount' :'50', 'expRemark':'' }
    ]
   }
   onEdit() {
     this.data.push({'expDate':new Date(), 'expItem': 'NEWWWW', 'expAmount' :'34', 'expRemark':'Noida' });
     this.router.navigate(['edit'], {relativeTo: this.route});
+  }
+
+  onAddExpense() {
+    this.data.push({'expDate':new Date(), 'expItem' :'fuel', 'expAmount' :'100', 'expRemark':'' });
   }
 
 }
