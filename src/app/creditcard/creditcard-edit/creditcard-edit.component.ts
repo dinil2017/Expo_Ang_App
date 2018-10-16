@@ -39,7 +39,7 @@ export class CreditcardEditComponent implements OnInit {
     let _dueAmount = 0;
     let _dueDate = new Date();
 
-    if(this.editMode) {
+    if (this.editMode) {
       this.editedCard = this.creditcardService.getCreditCard(this.id);
       _cardNo = this.editedCard.cardNo;
       _bank = this.editedCard.bank;
@@ -61,20 +61,22 @@ export class CreditcardEditComponent implements OnInit {
       dueAmount: new FormControl(_dueAmount, Validators.required),
       dueDate: new FormControl(_dueDate, Validators.required)
     });
-
   }
 
   onSubmit() {
-    if(this.editMode) {
+    if (this.editMode) {
       this.creditcardService.updateCreditCard(this.id, this.ccForm.value);
-    }
-    else {
+    } else {
       this.creditcardService.addCreditCard(this.ccForm.value);
     }
     this.ccForm.reset();
   }
 
   onCancel() {
-    this.router.navigate([this.id], {relativeTo: this.route.parent});
+    if (this.editMode) {
+      this.router.navigate([this.id], { relativeTo: this.route.parent });
+    } else {
+      this.router.navigate(['/creditcard']);
+    }
   }
 }

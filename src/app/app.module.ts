@@ -8,8 +8,7 @@ import { AppComponent } from './app.component';
 import { AuthService } from './auth.service';
 import { HeaderComponent } from './header/header.component';
 import { DataStorageService } from './shared/data-storage.service';
-import { ExpenseComponent } from './expense/expense.component';
-import { ExpenseEditComponent } from './expense/expense-edit/expense-edit.component';
+import { ExpenseModule } from './expense/expense.module';
 import { CreditcardModule } from './creditcard/creditcard.module';
 
 @NgModule({
@@ -17,13 +16,12 @@ import { CreditcardModule } from './creditcard/creditcard.module';
     AppComponent,
     HeaderComponent,
     AccountComponent,
-    AccountEditComponent,
-    ExpenseComponent,
-    ExpenseEditComponent
+    AccountEditComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ExpenseModule,
     CreditcardModule
   ],
   providers: [AuthService, DataStorageService],
