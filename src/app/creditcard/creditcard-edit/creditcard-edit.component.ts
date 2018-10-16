@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { CreditCardService } from './../creditcard.service';
 import { CreditCard } from '../creditcard.model';
@@ -18,6 +18,7 @@ export class CreditcardEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private creditcardService: CreditCardService
   ) {}
 
@@ -60,7 +61,7 @@ export class CreditcardEditComponent implements OnInit {
       dueAmount: new FormControl(_dueAmount, Validators.required),
       dueDate: new FormControl(_dueDate, Validators.required)
     });
-  
+
   }
 
   onSubmit() {
@@ -70,5 +71,10 @@ export class CreditcardEditComponent implements OnInit {
     else {
       this.creditcardService.addCreditCard(this.ccForm.value);
     }
+    this.ccForm.reset();
+  }
+
+  onCancel() {
+    this.router.navigate([this.id], {relativeTo: this.route.parent});
   }
 }

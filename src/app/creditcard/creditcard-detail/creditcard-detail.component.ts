@@ -32,6 +32,5 @@ export class CreditcardDetailComponent implements OnInit {
 
   onDeleteCard() {
     this.creditCardService.deleteCreditCard(this.index);
-    this.router.navigate(['/']);
   }
 }
