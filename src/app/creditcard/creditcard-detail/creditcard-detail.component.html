@@ -8,7 +8,7 @@
         <h3>{{ card.cardHolder }}</h3>
       </div>
       <div class="col-xs-12">
-          <h4>{{ card.cardNo }}</h4>
+          <h4>{{ card.cardNo | cardNumMask }}</h4>
         </div>
         <div class="col-xs-12">
           <h4>Due Amount : <strong>{{ card.dueAmount }}</strong></h4>

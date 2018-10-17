@@ -9,7 +9,7 @@ import { CreditcardListComponent } from './creditcard-list/creditcard-list.compo
 import { CreditcardRoutingModule } from './creditcard-routing.module';
 import { CreditcardComponent } from './creditcard.component';
 import { CreditCardService } from './creditcard.service';
-import { DropdownDirective } from './../shared/dropdown.directive';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -17,10 +17,9 @@ import { DropdownDirective } from './../shared/dropdown.directive';
     CreditcardListComponent,
     CreditcardItemComponent,
     CreditcardDetailComponent,
-    CreditcardEditComponent,
-    DropdownDirective
+    CreditcardEditComponent    
   ],
-  imports: [CommonModule, ReactiveFormsModule, CreditcardRoutingModule],
+  imports: [CommonModule, SharedModule, ReactiveFormsModule, CreditcardRoutingModule],
   providers: [CreditCardService]
 })
 export class CreditcardModule {}

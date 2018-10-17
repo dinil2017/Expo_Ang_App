@@ -2,14 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DropdownDirective } from './dropdown.directive';
+import { CardNumMaskPipe } from './cardnumber-mask.pipe';
 
 @NgModule({
   declarations: [
-    DropdownDirective
+    DropdownDirective,
+    CardNumMaskPipe
   ],
   exports: [
     CommonModule,
-    DropdownDirective
+    DropdownDirective,
+    CardNumMaskPipe
   ]
 })
-export class SharedModule {}
+export class SharedModule { }
