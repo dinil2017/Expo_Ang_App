@@ -12,6 +12,7 @@ import { CreditCardService } from './../creditcard.service';
 export class CreditcardDetailComponent implements OnInit {
   card: CreditCard;
   index: number;
+  mask: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,5 +33,9 @@ export class CreditcardDetailComponent implements OnInit {
 
   onDeleteCard() {
     this.creditCardService.deleteCreditCard(this.index);
+  }
+
+  toggleMask() {
+    this.mask = !this.mask;
   }
 }

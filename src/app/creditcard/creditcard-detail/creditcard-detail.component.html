@@ -8,7 +8,10 @@
         <h3>{{ card.cardHolder }}</h3>
       </div>
       <div class="col-xs-12">
-          <h4>{{ card.cardNo | cardNumMask }}</h4>
+          <h4>{{ card.cardNo | cardNumMask: mask }}
+          <button type="button" (click)="toggleMask()"
+          class="btn btn-default btn-sm glyphicon {{mask ? 'glyphicon-eye-open' : 'glyphicon-eye-close'}}" 
+          title="{{mask ? 'Show Card Number' : 'Hide Card Number'}}" ></button></h4>
         </div>
         <div class="col-xs-12">
           <h4>Due Amount : <strong>{{ card.dueAmount }}</strong></h4>
