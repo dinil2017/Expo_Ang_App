@@ -6,7 +6,7 @@
     <hr>
     <div class="row">
     <div class="col-md-6 col-xs-6">
-     <table class="table table-striped" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="10">
+     <table class="table table-striped" [mfData]="expenses" #mf="mfDataTable" [mfRowsOnPage]="10">
       <thead>
       <tr>
           <th style="width: 20%">
@@ -25,15 +25,15 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let exp of mf.data">
+      <tr *ngFor="let exp of mf.data; let i = index">
           <td>{{exp.expDate | date: 'dd/MM/yyyy'}}</td>
           <td>{{exp.expItem}}</td>
           <td>{{exp.expAmount}}</td>
           <td>{{exp.expRemark}}</td>
           <td>
             <div class="row">
-              <button type="button" class="btn btn-default btn-sm glyphicon glyphicon-pencil" (click)="onEdit()"></button>            
-              <button type="button" class="btn btn-default btn-sm glyphicon glyphicon-trash" style="margin-left: 2px" (click)="onEdit()"></button>
+              <button type="button" class="btn btn-default btn-sm glyphicon glyphicon-pencil" (click)="onEdit(i)"></button>
+              <button type="button" class="btn btn-default btn-sm glyphicon glyphicon-trash" style="margin-left: 2px" (click)="onDelete(i)"></button>
             </div>
           </td>
       </tr>

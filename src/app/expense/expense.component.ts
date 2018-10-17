@@ -1,3 +1,5 @@
+import { Expense } from './expense.model';
+import { ExpenseService } from './expense.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,31 +11,25 @@ import { Component, OnInit } from '@angular/core';
 export class ExpenseComponent implements OnInit {
 
   bgImgUrl = 'https://elcapitalfinanciero.com/wp-content/uploads/2014/07/dinero-690x450.jpg';
+  expenses: Expense[] = [];
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
-
-  public data : any 
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private expenseService: ExpenseService) { }
 
   ngOnInit() {
-    this.data = [
-    {'expDate':new Date(), 'expItem': 'monthly', 'expAmount' :'1250', 'expRemark':'Sep-18' },
-    {'expDate':new Date(), 'expItem' :'shopping', 'expAmount' :'100', 'expRemark':'Lulu' },
-    {'expDate':new Date(), 'expItem' :'flight ticket', 'expAmount' :'1500', 'expRemark':'Onam' },
-    {'expDate':new Date(), 'expItem' :'shopping', 'expAmount' :'340', 'expRemark':'' },
-    {'expDate':new Date(), 'expItem' :'movie', 'expAmount' :'70', 'expRemark':'Koode' },
-    {'expDate':new Date(), 'expItem' :'fuel', 'expAmount' :'100', 'expRemark':'' },
-    {'expDate':new Date(), 'expItem' :'dewa', 'expAmount' :'550', 'expRemark':'Aug-18' },
-    {'expDate':new Date(), 'expItem' :'etisalat', 'expAmount' :'300', 'expRemark':'Aug-18' },
-    {'expDate':new Date(), 'expItem' :'fuel', 'expAmount' :'50', 'expRemark':'' }
-   ]
-  }
-  onEdit() {
-    this.data.push({'expDate':new Date(), 'expItem': 'NEWWWW', 'expAmount' :'34', 'expRemark':'Noida' });
-    this.router.navigate(['edit'], {relativeTo: this.route});
+    this.expenses = this.expenseService.getExpenses();
   }
 
   onAddExpense() {
-    this.data.push({'expDate':new Date(), 'expItem' :'fuel', 'expAmount' :'100', 'expRemark':'' });
+    this.router.navigate(['new'], {relativeTo: this.route});
   }
 
+  onEdit(id: number) {
+    this.router.navigate([id, 'edit'], {relativeTo: this.route});
+  }
+
+  onDelete(id: number) {
+    this.expenseService.deleteExpense(id);
+  }
 }

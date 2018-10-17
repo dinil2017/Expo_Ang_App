@@ -8,7 +8,10 @@ const expRoutes: Routes = [
   {
     path: 'expense',
     component: ExpenseComponent,
-    children: [{ path: 'edit', component: ExpenseEditComponent }]
+    children: [
+      { path: 'new', component: ExpenseEditComponent },
+      { path: ':id/edit', component: ExpenseEditComponent }
+    ]
   }
 ];
 
