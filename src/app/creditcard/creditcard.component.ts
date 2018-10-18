@@ -8,10 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreditcardComponent implements OnInit {
 
-  constructor() {
-    console.log('CreditcardComponent constructor');
-
-  }
+  constructor() {}
 
   ngOnInit() {
   }

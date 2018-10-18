@@ -18,14 +18,16 @@ export class CreditcardDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private creditCardService: CreditCardService
-  ) {
-    this.route.params.subscribe((params: Params) => {
-      this.index = +params['id'];
-      this.card = this.creditCardService.getCreditCard(this.index);
-    });
-  }
+    ) {
+      this.route.params.subscribe((params: Params) => {
+        this.index = +params['id'];
+        this.card = this.creditCardService.getCreditCard(this.index);
+        this.mask = true;
+      });
+    }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   onEditCard() {
     this.router.navigate(['edit'], {relativeTo: this.route});

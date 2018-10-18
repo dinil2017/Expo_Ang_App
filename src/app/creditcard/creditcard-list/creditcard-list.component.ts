@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { CreditCard } from '../creditcard.model';
 import { CreditCardService } from '../creditcard.service';
-import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-creditcard-list',
@@ -13,7 +13,7 @@ export class CreditcardListComponent implements OnInit {
 
   cards: CreditCard[];
 
-  constructor(private creditCardService: CreditCardService, 
+  constructor(private creditCardService: CreditCardService,
     private route: ActivatedRoute, private router: Router) {
     this.cards = this.creditCardService.getCreditCards();
   }
