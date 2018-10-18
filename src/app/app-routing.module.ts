@@ -5,7 +5,7 @@ import { AccountComponent } from './account/account.component';
 
 
 const appRoutes: Routes = [
-  { path: '', component: AccountComponent, pathMatch: 'full' },
+  { path: '', redirectTo:'account', pathMatch: 'full' },
   { path: 'account', component: AccountComponent }
 ];
 

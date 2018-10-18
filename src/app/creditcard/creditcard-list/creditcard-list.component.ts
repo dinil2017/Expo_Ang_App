@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 
 import { CreditCard } from '../creditcard.model';
 import { CreditCardService } from '../creditcard.service';
@@ -13,14 +12,11 @@ export class CreditcardListComponent implements OnInit {
 
   cards: CreditCard[];
 
-  constructor(private creditCardService: CreditCardService,
-    private route: ActivatedRoute, private router: Router) {
+  constructor(private creditCardService: CreditCardService) {
     this.cards = this.creditCardService.getCreditCards();
   }
 
   ngOnInit() { }
 
-  onNewCard() {
-    this.router.navigate(['new'], { relativeTo: this.route });
-  }
+
 }

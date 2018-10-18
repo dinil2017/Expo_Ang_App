@@ -1,11 +1,13 @@
 <div class="row">
-    <div class="col-xs-12">
-      <form [formGroup]="ccForm" (ngSubmit)="onSubmit()">
+  <div class="col-xs-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">{{editMode ? 'Edit' : 'New'}} Card Details</div>
+      <form [formGroup]="ccForm" (ngSubmit)="onSubmit()" style="margin: 5px">
         <div>
           <label for="cardNo">Card Number</label>
           <input id="cardNo" formControlName="cardNo" type="text" class="form-control">
           <label for="bank">Bank</label>
-          <input id="bank" formControlName="bank" type="text" class="form-control" >
+          <input id="bank" formControlName="bank" type="text" class="form-control">
           <label for="cardHolder">Card Holder</label>
           <input id="cardHolder" formControlName="cardHolder" type="text" class="form-control">
           <label for="expiryDate">Expiry Date</label>
@@ -19,10 +21,11 @@
         </div>
         <br>
         <div>
-          <button class="btn btn-primary animate" type="submit" [disabled]="!ccForm.valid">{{editMode ? 'Update' : 'Add'}}</button>
+          <button class="btn btn-primary animate" type="submit" [disabled]="!ccForm.valid">{{editMode ? 'Update' :
+            'Add'}}</button>
           <button style="margin-left: 10px" class="btn btn-danger animate" type="button" (click)="onCancel()">Cancel</button>
         </div>
       </form>
     </div>
+  </div>
 </div>
-

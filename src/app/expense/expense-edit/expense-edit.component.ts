@@ -61,11 +61,7 @@ export class ExpenseEditComponent implements OnInit {
   }
 
   onCancel() {
-    if (this.editMode) {
-      this.router.navigate([this.id], { relativeTo: this.route.parent });
-    } else {
-      this.router.navigate(['/expense']);
-    }
+    this.router.navigate(['/expense']);
   }
 
 }

@@ -1,31 +1,39 @@
-<!-- <div class="profile-image" style="height:auto"
-     [ngStyle]="{ 'background-image': 'url(' + bgImgUrl + ')'}"> -->
-    <div>
-      <button class="btn btn-success" (click)="onAddExpense()">Add Expense</button>
+<div class="row">
+  <div class="col-xs-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Total Expense</h3>
+      </div>
+      <div class="panel-body">
+        {{totalExpense}}
+      </div>
     </div>
-    <hr>
-    <div class="row">
-    <div class="col-md-6 col-xs-6">
-     <table class="table table-striped" [mfData]="expenses" #mf="mfDataTable" [mfRowsOnPage]="10">
+  </div>
+  <button class="btn btn-success" style="float: right" (click)="onAddExpense()">Add Expense</button>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-6 col-xs-6">
+    <table class="table table-striped" [mfData]="expenses" #mf="mfDataTable" [mfRowsOnPage]="10">
       <thead>
-      <tr>
+        <tr>
           <th style="width: 20%">
-              <mfDefaultSorter by="expDate">Date</mfDefaultSorter>
+            <mfDefaultSorter by="expDate">Date</mfDefaultSorter>
           </th>
           <th style="width: 30%">
-              <mfDefaultSorter by="expItem">Item</mfDefaultSorter>
+            <mfDefaultSorter by="expItem">Item</mfDefaultSorter>
           </th>
           <th style="width: 15%">
-              <mfDefaultSorter by="expAmount">Amount</mfDefaultSorter>
+            <mfDefaultSorter by="expAmount">Amount</mfDefaultSorter>
           </th>
           <th style="width: 20%">
-              <mfDefaultSorter by="expRemark">Remark</mfDefaultSorter>
+            <mfDefaultSorter by="expRemark">Remark</mfDefaultSorter>
           </th>
           <th style="width: 15%"></th>
-      </tr>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let exp of mf.data; let i = index">
+        <tr *ngFor="let exp of mf.data; let i = index">
           <td>{{exp.expDate | date: 'dd/MM/yyyy'}}</td>
           <td>{{exp.expItem}}</td>
           <td>{{exp.expAmount}}</td>
@@ -33,17 +41,18 @@
           <td>
             <div class="row">
               <button type="button" class="btn btn-default btn-sm glyphicon glyphicon-pencil" (click)="onEdit(i)"></button>
-              <button type="button" class="btn btn-default btn-sm glyphicon glyphicon-trash" style="margin-left: 2px" (click)="onDelete(i)"></button>
+              <button type="button" class="btn btn-default btn-sm glyphicon glyphicon-trash" style="margin-left: 2px"
+                (click)="onDelete(i)"></button>
             </div>
           </td>
-      </tr>
+        </tr>
       </tbody>
       <tfoot>
-      <tr>
+        <tr>
           <td colspan="5">
-              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
           </td>
-      </tr>
+        </tr>
       </tfoot>
     </table>
   </div>

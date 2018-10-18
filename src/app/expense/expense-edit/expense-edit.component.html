@@ -1,22 +1,25 @@
 <div class="row">
   <div class="col-xs-12">
-    <form [formGroup]="expForm" (ngSubmit)="onSubmit()">
-      <div>
-        <label for="expDate">Date</label>
-        <input id="expDate" formControlName="expDate" type="date" class="form-control">
-        <label for="expItem">Item</label>
-        <input id="expItem" formControlName="expItem" type="text" class="form-control" >
-        <label for="expAmount">Amount</label>
-        <input id="expAmount" formControlName="expAmount" type="number" class="form-control">
-        <label for="expRemark">Remark</label>
-        <input id="expRemark" formControlName="expRemark" type="text" class="form-control">
-      </div>
-      <br>
-      <div>
-        <button class="btn btn-primary animate" type="submit" [disabled]="!expForm.valid">{{editMode ? 'Update' : 'Add'}}</button>
-        <button style="margin-left: 10px" class="btn btn-danger animate" type="button" (click)="onCancel()">Cancel</button>
-      </div>
-    </form>
+    <div class="panel panel-primary">
+      <div class="panel-heading">{{editMode ? 'Edit' : 'New'}} Expense</div>
+      <form [formGroup]="expForm" (ngSubmit)="onSubmit()" style="margin: 5px">
+        <div>
+          <label for="expDate">Date</label>
+          <input id="expDate" formControlName="expDate" type="date" class="form-control">
+          <label for="expItem">Item</label>
+          <input id="expItem" formControlName="expItem" type="text" class="form-control">
+          <label for="expAmount">Amount</label>
+          <input id="expAmount" formControlName="expAmount" type="number" class="form-control">
+          <label for="expRemark">Remark</label>
+          <input id="expRemark" formControlName="expRemark" type="text" class="form-control">
+        </div>
+        <br>
+        <div>
+          <button class="btn btn-primary animate" type="submit" [disabled]="!expForm.valid">{{editMode ? 'Update' :
+            'Add'}}</button>
+          <button style="margin-left: 10px" class="btn btn-danger animate" type="button" (click)="onCancel()">Cancel</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
-
