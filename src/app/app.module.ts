@@ -10,17 +10,17 @@ import { HeaderComponent } from './header/header.component';
 import { DataStorageService } from './shared/data-storage.service';
 import { ExpenseModule } from './expense/expense.module';
 import { CreditcardModule } from './creditcard/creditcard.module';
+import { AccountModule } from './account/account.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    AccountComponent,
-    AccountEditComponent
+    HeaderComponent    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    AccountModule,
     ExpenseModule,
     CreditcardModule
   ],

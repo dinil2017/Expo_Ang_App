@@ -1,3 +1,34 @@
-<p class="well well-lg">
-  account works!
-</p>
+<div class="row">
+  <div class="col-md-5">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Total Balance</h3>
+      </div>
+      <div class="panel-body">
+        {{totalBalance}}
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-success" style="float: right" (click)="onAddAccount()">Add Account</button>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-5">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Accounts</div>
+      <div class="panel-body">
+        <div *ngFor="let account of accounts; let index = index">
+          <a style="cursor: pointer;margin-top: 5px" [routerLink]="[index, 'edit']" routerLinkActive="active" class="list-group-item clearfix">
+            <div class="pull-left">
+              <h4 class="list-group-item-text">{{ account.name }}</h4>
+              <p class="list-group-item-heading ">{{ account.balance }}</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-7">
+    <router-outlet></router-outlet>
+  </div>
+</div>
