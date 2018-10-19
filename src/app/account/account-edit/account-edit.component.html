@@ -1,3 +1,24 @@
-<p>
-  account-edit works!
-</p>
+<div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-primary">
+        <div class="panel-heading">{{editMode ? 'Edit' : 'New'}} Account</div>
+        <form [formGroup]="accountForm" (ngSubmit)="onSubmit()" style="margin: 5px">
+          <div>            
+            <label for="name">Name</label>
+            <input id="name" formControlName="name" type="text" class="form-control">
+            <label for="balance">Balance</label>
+            <input id="balance" formControlName="balance" type="number" class="form-control">
+          </div>
+          <br>
+          <div>
+            <button class="btn btn-primary animate" type="submit" [disabled]="!accountForm.valid">{{editMode ? 'Update' :
+              'Add'}}</button>
+            <button style="margin-left: 10px" class="btn btn-danger animate" type="button" (click)="onCancel()">Cancel</button>
+            <button *ngIf="editMode" title="Delete Account" class="btn btn-default float-right glyphicon glyphicon-trash" 
+             style="float: right;" type="button" (click)="onDelete()"></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { ReactiveFormsModule } from "@angular/forms";
 
 import { AccountService } from "./account.service";
 import { AccountComponent } from "./account.component";
@@ -11,7 +12,7 @@ import { AccountingRoutingModule } from "./account-routing.module";
         AccountComponent,
         AccountEditComponent
     ],
-    imports: [CommonModule, AccountingRoutingModule],
+    imports: [CommonModule, ReactiveFormsModule, AccountingRoutingModule],
     providers: [AccountService]
 })
 export class AccountModule {
