@@ -107,7 +107,7 @@ export class MasterComponent implements OnInit {
       this.myForm = this._fb.group({
         newCodValues: this._fb.array([
             this._fb.group({
-                            asdas:''
+              cdval:'DINIL'
             })
         ])
       });

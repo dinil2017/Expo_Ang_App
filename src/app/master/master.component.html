@@ -157,7 +157,7 @@
             <form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm)">
               <div formArrayName="newCodValues">
                 <div *ngFor="let  codeValue of selectedCodeMStr.codeValues; let i=index" class="panel panel-default">
-                  <input type="text">
+                  <input type="text" formControlName="cdval">
                 </div>
               </div>
             </form>
