@@ -30,13 +30,15 @@ export class MasterComponent implements OnInit {
 
   public myForm: FormGroup;
 
-  selectedCodeMStr: CodeMaster = {code:'fsdfs', codeValues:['fsdf','fsdfsdf']};
+  selectedCodeMStr: CodeMaster;
+
+  newCode: string;
 
   constructor(
     private masterService: MasterService,
     private modalService: BsModalService,
     private _fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.sysparams = this.masterService.getSystemParams();
@@ -47,7 +49,10 @@ export class MasterComponent implements OnInit {
     if (mstType == 'SYSPARAM') {
       this.editedMaster = Object.assign({}, this.sysparams[id]);
     } else if (mstType == 'CODE') {
-      this.editedMaster = Object.assign({}, this.codeMasters[id]);
+      this.selectedCodeMStr = Object.assign({}, this.codeMasters[id]);
+      this.myForm = this._fb.group({
+        newCodValues: this._fb.array([])
+      });
     } else if (mstType == 'CODE_VAL') {
       this.editedMaster = Object.assign({}, this.codeMasters[id]);
       this.editedCodVal = this.editedMaster.codeValues[codValId];
@@ -76,49 +81,36 @@ export class MasterComponent implements OnInit {
   onModalSubmit() {
     // TODO: invoke all subscribers on sysparam change
     if (this.masterType == 'SYSPARAM') {
-      if(this.editMode) {
+      if (this.editMode) {
         this.masterService.updateSysParamMaster(this.editedId, this.editedMaster);
       }
       else {
         this.masterService.addSysParamMaster(this.editedMaster);
       }
-    } else if (this.masterType == 'CODE') {
-      if(this.editMode) {
-        this.masterService.updateCodeMaster(this.editedId, this.editedMaster);
-      }
-    } else if (this.masterType == 'CODE_VAL') {
-      if(this.editMode) {
+    }     
+    else if (this.masterType == 'CODE_VAL') {
+      if (this.editMode) {
         this.editedMaster.codeValues[this.codValId] = this.editedCodVal;
         this.masterService.updateCodeMaster(this.editedId, this.editedMaster);
       }
-    }else {
+    } else {
       throw new Error('Undefined Master type');
     }
   }
 
   onNewMaster(mstType: string, template: TemplateRef<any>) {
     if (mstType == 'SYSPARAM') {
-      this.editedMaster = new SysParam('','');
+      this.editedMaster = new SysParam('', '');
     } else if (mstType == 'CODE') {
-      this.modalRef = this.modalService.show(template);
-    } else if (mstType == 'CODE_VAL') {
-      // this.selectedCodeMStr = this.codeMasters[0];
-
+      this.newCode = '';
       this.myForm = this._fb.group({
-        newCodValues: this._fb.array([
-            this._fb.group({
-              cdval:'DINIL'
-            })
-        ])
+        newCodValues: this._fb.array([])
       });
-
-        const control = <FormArray>this.myForm.controls['newCodValues'];
-        control.push(this._fb.group({
-          code: 'yyyy'
-      }));
-
-
-      this.modalRef = this.modalService.show(template);
+    } else if (mstType == 'CODE_VAL') {
+      this.selectedCodeMStr = this.codeMasters[0];
+      this.myForm = this._fb.group({
+        newCodValues: this._fb.array([])
+      });
     } else {
       throw new Error('Undefined Master type');
     }
@@ -127,9 +119,37 @@ export class MasterComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
 
-  onChange(val: number) {
-    this.selectedCodeMStr = this.codeMasters[val];
-    console.log("Changed value" + val);
+  initNewCodeVal() {
+    return this._fb.group({
+      cdval: ''
+    });
+  }
+
+  onChange(id: number) {
+    this.selectedCodeMStr = this.codeMasters[id];
+    this.editedId = id;
+  }
+
+  onAddCodeVal() {
+    const control = <FormArray>this.myForm.controls['newCodValues'];
+    control.push(this.initNewCodeVal());
+  }
+
+  saveCodeVal(myForm: FormGroup) {
+    if (this.masterType == 'CODE' && !this.editMode) {
+      this.selectedCodeMStr = new CodeMaster(this.newCode, []);
+    }
+    const control = <FormArray>this.myForm.controls['newCodValues'];
+    control.value.forEach(codeval => {
+      console.log('on save' + codeval.cdval);
+      this.selectedCodeMStr.codeValues.push(codeval.cdval);
+    });
+
+    if (this.masterType == 'CODE' && !this.editMode) {
+      this.masterService.addCodeMaster(this.selectedCodeMStr);
+    } else if (this.masterType == 'CODE_VAL' || (this.masterType == 'CODE' && this.editMode)) {
+      this.masterService.updateCodeMaster(this.editedId, this.selectedCodeMStr);
+    }
   }
 
 }
