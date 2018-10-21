@@ -4,8 +4,9 @@
       New Master <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
-      <li><a style="cursor: pointer;">System Parameter</a></li>
-      <li><a style="cursor: pointer;">Code Master</a></li>
+      <li><a style="cursor: pointer;" (click)="onNewMaster('SYSPARAM', sysparam_template)">System Parameter</a></li>
+      <li><a style="cursor: pointer;" (click)="onNewMaster('CODE', codemaster_template)">Code Master</a></li>
+      <li><a style="cursor: pointer;" (click)="onNewMaster('CODE_VAL', codemaster_template)">Code Value</a></li>
     </ul>
   </div>
   <hr>
@@ -32,9 +33,9 @@
                 <td>{{sysparam.value}}</td>
                 <td>
                   <div class="row">
-                    <button type="button" class="btn btn-warning btn-sm glyphicon glyphicon-pencil" (click)="onEdit(i)"></button>
+                    <button type="button" class="btn btn-warning btn-sm glyphicon glyphicon-pencil" (click)="onEdit(i, sysparam_template, 'SYSPARAM')"></button>
                     <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" style="margin-left: 2px"
-                      (click)="onDelete(i)"></button>
+                      (click)="onDelete(i,'SYSPARAM')"></button>
                   </div>
                 </td>
               </tr>
@@ -63,26 +64,26 @@
                 </th>
                 <th style="width: 60%">
                   <a>Code Values</a>
-                </th>                
+                </th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let codeMaster of mfCode.data; let i = index">
                 <td>{{codeMaster.code}}
-                    <div style="margin-top: 10px;">
-                        <button type="button" class="btn btn-warning btn-sm glyphicon glyphicon-pencil" (click)="onEdit(i)"></button>
-                        <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" style="margin-left: 2px"
-                          (click)="onDelete(i)"></button>
-                      </div>
+                  <div style="margin-top: 10px;">
+                    <button type="button" class="btn btn-warning btn-sm glyphicon glyphicon-pencil" (click)="onEdit(i, codemaster_template, 'CODE')"></button>
+                    <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" style="margin-left: 2px"
+                      (click)="onDelete(i, 'CODE')"></button>
+                  </div>
                 </td>
                 <td>
-                  <ul class="list-group">
-                    <li class="list-group-item" *ngFor="let codeVal of codeMaster.codeValues">{{codeVal}}</li>
-                  </ul>
-                </td>
-                
-                
-
+              <tr *ngFor="let codeVal of codeMaster.codeValues; let codValIndex = index" style="height: 35px">
+                <td style="width:75%">{{codeVal}}</td>
+                <td><button type="button" class="btn btn-warning btn-sm glyphicon glyphicon-pencil" (click)="onEdit(i, codemaster_template, 'CODE_VAL', codValIndex)"></button>
+                  <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" style="margin-left: 2px"
+                    (click)="onDelete(i, 'CODE_VAL', codValIndex)"></button></td>
+              </tr>
+              </td>
               </tr>
             </tbody>
             <tfoot>
@@ -98,4 +99,87 @@
     </div>
   </div>
 
+  <!-- system parameter edit pop up -->
+  <ng-template #sysparam_template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{editMode? 'Edit' : 'New'}} System Parameter</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form #sysParamModalForm="ngForm" (ngSubmit)="onModalSubmit()">
+      <div class="modal-body">
+        <div *ngIf="!editMode">
+          <label for="param">Parameter</label>
+          <input class="form-control" id="param" name="editedMaster.param" type="text" [(ngModel)]="editedMaster.param"
+            required>
+          <label for="val">Value</label>
+          <input class="form-control" id="val" name="editedMaster.value" type="text" [(ngModel)]="editedMaster.value"
+            required>
+        </div>
+        <div *ngIf="editMode">
+          <label for="val">{{editedMaster.param}}</label>
+          <input class="form-control" id="val" name="editedMaster.value" type="text" [(ngModel)]="editedMaster.value"
+            required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" [disabled]="!sysParamModalForm.valid" (click)="modalRef.hide()">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modalRef.hide()">Cancel</button>
+      </div>
+    </form>
+  </ng-template>
+
+  <!-- code master edit pop up -->
+  <ng-template #codemaster_template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{editMode? 'Edit' : 'New'}} Code Master</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form #codeMasterModalForm="ngForm" (ngSubmit)="onModalSubmit()">
+      <div class="modal-body">
+        <div *ngIf="!editMode">
+          <div *ngIf="masterType == 'CODE'">
+
+          </div>
+          <div *ngIf="masterType == 'CODE_VAL'">
+            <label for="selectedCodeMStr">Select Code Master</label>
+            <select class="form-control" id="selectedCodeMStr" (change)="onChange($event.target.value)">
+              <option *ngFor="let codeMstr of codeMasters; let i = index" [value]="i">{{ codeMstr.code }}</option>
+            </select>
+            <ul class="list-group">
+              <li class="float-right"><button btn-success class="btn btn-success btn-sm glyphicon glyphicon-plus" style="float: right; margin-top: 5px"
+                  (click)="(onNewCodeVal())"></button></li><br>
+              <li class="list-group-item" *ngFor="let codVal of selectedCodeMStr.codeValues">{{codVal}}</li>
+            </ul>
+            <form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm)">
+              <div formArrayName="newCodValues">
+                <div *ngFor="let  codeValue of selectedCodeMStr.codeValues; let i=index" class="panel panel-default">
+                  <input type="text">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div *ngIf="editMode">
+          <div *ngIf="masterType == 'CODE'">
+            <label for="val">Code Master</label>
+            <input class="form-control" id="val" name="editedMaster.code" type="text" [(ngModel)]="editedMaster.code"
+              required>
+          </div>
+          <div *ngIf="masterType == 'CODE_VAL'">
+            <p class="well well-sm">Code Master: {{editedMaster.code}}</p>
+            <label for="val">Code Value</label>
+            <input class="form-control" id="val" name="editedCodVal" type="text" [(ngModel)]="editedCodVal" required>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" [disabled]="!codeMasterModalForm.valid" (click)="modalRef.hide()">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modalRef.hide()">Cancel</button>
+      </div>
+    </form>
+  </ng-template>
 </div>
