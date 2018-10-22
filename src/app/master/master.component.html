@@ -1,3 +1,6 @@
+<div *ngFor="let alert of alerts">
+    <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" [dismissible]="true" (onClosed)="onAlertClosed(alert)">{{ alert.msg }}</alert>
+  </div>
 <div class="col-xs-12">
   <div class="btn-group" appDropdown>
     <button type="button" class="btn btn-success dropdown-toggle">
@@ -5,8 +8,8 @@
     </button>
     <ul class="dropdown-menu">
       <li><a style="cursor: pointer;" (click)="onNewMaster('SYSPARAM', sysparam_template)">System Parameter</a></li>
-      <li><a style="cursor: pointer;" (click)="onNewMaster('CODE', new_codeval_template)">Code Master</a></li>
-      <li><a style="cursor: pointer;" (click)="onNewMaster('CODE_VAL', new_codeval_template)">Code Value</a></li>
+      <li><a style="cursor: pointer;" (click)="onNewMaster('CODE', codemst_update_template)">Code Master</a></li>
+      <li><a style="cursor: pointer;" (click)="onNewMaster('CODE_VAL', codemst_update_template)">Code Value</a></li>
     </ul>
   </div>
   <hr>
@@ -71,7 +74,7 @@
               <tr *ngFor="let codeMaster of mfCode.data; let i = index">
                 <td>{{codeMaster.code}}
                   <div style="margin-top: 10px;">
-                    <button type="button" class="btn btn-warning btn-sm glyphicon glyphicon-pencil" (click)="onEdit(i, new_codeval_template, 'CODE')"></button>
+                    <button type="button" class="btn btn-warning btn-sm glyphicon glyphicon-pencil" (click)="onEdit(i, codemst_update_template, 'CODE')"></button>
                     <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" style="margin-left: 2px"
                       (click)="onDelete(i, 'CODE')"></button>
                   </div>
@@ -79,7 +82,7 @@
                 <td>
               <tr *ngFor="let codeVal of codeMaster.codeValues; let codValIndex = index" style="height: 35px">
                 <td style="width:75%">{{codeVal}}</td>
-                <td><button type="button" class="btn btn-warning btn-sm glyphicon glyphicon-pencil" (click)="onEdit(i, codemaster_template, 'CODE_VAL', codValIndex)"></button>
+                <td><button type="button" class="btn btn-warning btn-sm glyphicon glyphicon-pencil" (click)="onEdit(i, codeval_name_edit_template, 'CODE_VAL', codValIndex)"></button>
                   <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" style="margin-left: 2px"
                     (click)="onDelete(i, 'CODE_VAL', codValIndex)"></button></td>
               </tr>
@@ -130,10 +133,10 @@
     </form>
   </ng-template>
 
-  <!-- code master edit pop up -->
-  <ng-template #codemaster_template>
+  <!-- code master name edit pop up -->
+  <ng-template #codeval_name_edit_template>
     <div class="modal-header">
-      <h4 class="modal-title pull-left">{{editMode? 'Edit' : 'New'}} Code Master</h4>
+      <h4 class="modal-title pull-left">Edit Code Value</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -142,19 +145,19 @@
       <div class="modal-body">
         <p class="well well-sm">Code Master: {{editedMaster.code}}</p>
         <label for="val">Code Value</label>
-        <input class="form-control" id="val" name="editedCodVal" type="text" 
+        <input class="form-control" id="val" name="editedCodVal" type="text"
         [(ngModel)]="editedCodVal" required>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" [disabled]="!codeMasterModalForm.valid" (click)="modalRef.hide()">Save</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!codeMasterModalForm.valid || codeMasterModalForm.pristine" (click)="modalRef.hide()">Save</button>
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modalRef.hide()">Cancel</button>
       </div>
     </form>
   </ng-template>
 
-  <ng-template #new_codeval_template>
+  <ng-template #codemst_update_template>
     <div class="modal-header">
-      <h4 class="modal-title pull-left">New Code Value</h4>
+      <h4 class="modal-title pull-left">{{editMode ? 'Edit': 'New'}} Code {{masterType == 'CODE' ? 'Master' : 'Value' }}</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -193,7 +196,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" [disabled]="!myForm.valid" (click)="modalRef.hide()">Save</button>
+          <button type="submit" class="btn btn-primary" [disabled]="(masterType == 'CODE' ? newCode == '' : (!myForm.valid || myForm.pristine))" (click)="modalRef.hide()">Save</button>
           <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modalRef.hide()">Cancel</button>
         </div>
       </form>

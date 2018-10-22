@@ -33,3 +33,5 @@ https://github.com/valor-software/ngx-bootstrap
 https://loiane.com/2017/08/how-to-add-bootstrap-to-an-angular-cli-project/#4-bootstrap-javascript-components-with-ngx-bootstrap-option-1
 
 https://stackblitz.com/edit/angular-5e2qjd?file=src%2Fapp%2Fapp.component.html
+
+https://coryrylan.com/blog/angular-form-builder-and-validation-management
