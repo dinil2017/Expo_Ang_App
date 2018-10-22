@@ -1,3 +1,4 @@
+import { MasterModule } from './../master/master.module';
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -12,7 +13,7 @@ import { AccountingRoutingModule } from "./account-routing.module";
         AccountComponent,
         AccountEditComponent
     ],
-    imports: [CommonModule, ReactiveFormsModule, AccountingRoutingModule],
+    imports: [CommonModule, ReactiveFormsModule, AccountingRoutingModule, MasterModule],
     providers: [AccountService]
 })
 export class AccountModule {

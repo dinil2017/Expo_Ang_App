@@ -21,7 +21,7 @@
           <a style="cursor: pointer;margin-top: 5px" [routerLink]="[index, 'edit']" routerLinkActive="active" class="list-group-item clearfix">
             <div class="pull-left">
               <h4 class="list-group-item-text">{{ account.name }}</h4>
-              <p class="list-group-item-heading ">{{ account.balance }}</p>
+              <p class="list-group-item-heading ">{{ account.balance }} {{account.currency }}</p>
             </div>
           </a>
         </div>
