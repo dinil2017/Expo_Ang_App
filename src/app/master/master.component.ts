@@ -43,8 +43,16 @@ export class MasterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.sysparams = this.masterService.getSystemParams();
-    this.codeMasters = this.masterService.getCodeMasters();
+    this.masterService.getSystemParams().subscribe(
+      (data: SysParam[]) => {
+        console.log('got sys param in  master component ngOnInit:' + data);
+        this.sysparams = data != undefined ? data : []}
+    );
+    this.masterService.getCodeMasters().subscribe(
+      (data: CodeMaster[]) => {
+        console.log('got code master param in  master component ngOnInit:' + data);
+        this.codeMasters = data != undefined ? data : []}
+    );
   }
 
   onEdit(
@@ -75,13 +83,16 @@ export class MasterComponent implements OnInit {
 
   onDelete(id: number, mstType: string, codValId: number = null) {
     if (mstType == 'SYSPARAM') {
-      this.masterService.deleteSysParamMaster(id);
+      this.sysparams.splice(id, 1);
+      this.masterService.saveOrUpdateSystemParameters(this.sysparams);
       this.addAlert('success', 'System Parameter deleted!!');
     } else if (mstType == 'CODE') {
-      this.masterService.deleteCodeMaster(id);
+      this.codeMasters.splice(id, 1);
+      this.masterService.saveOrUpdateCodeMasters(this.codeMasters);
       this.addAlert('success', 'Code Master deleted!!');
     } else if (mstType == 'CODE_VAL') {
-      this.masterService.deleteCodeVal(id, codValId);
+      this.codeMasters[id].codeValues.splice(codValId, 1);
+      this.masterService.saveOrUpdateCodeMasters(this.codeMasters);
       this.addAlert('success', 'Code Value deleted!!');
     } else {
       throw new Error('Undefined Master type');
@@ -92,19 +103,19 @@ export class MasterComponent implements OnInit {
     // TODO: invoke all subscribers on sysparam change
     if (this.masterType == 'SYSPARAM') {
       if (this.editMode) {
-        this.masterService.updateSysParamMaster(
-          this.editedId,
-          this.editedMaster
-        );
+        this.sysparams[this.editedId] = this.editedMaster;
+        this.masterService.saveOrUpdateSystemParameters(this.sysparams);
         this.addAlert('success', 'System parameter updated!!');
       } else {
-        this.masterService.addSysParamMaster(this.editedMaster);
+        this.sysparams.push(this.editedMaster);
+        this.masterService.saveOrUpdateSystemParameters(this.sysparams);
         this.addAlert('success', 'System parameter added!!');
       }
     } else if (this.masterType == 'CODE_VAL') {
       if (this.editMode) {
         this.editedMaster.codeValues[this.codValId] = this.editedCodVal;
-        this.masterService.updateCodeMaster(this.editedId, this.editedMaster);
+        this.codeMasters[this.editedId] = this.editedMaster;
+        this.masterService.saveOrUpdateCodeMasters(this.codeMasters);
         this.addAlert('success', 'Code Values updated!!');
       }
     } else {
@@ -159,13 +170,15 @@ export class MasterComponent implements OnInit {
     });
 
     if (this.masterType == 'CODE' && !this.editMode) {
-      this.masterService.addCodeMaster(this.selectedCodeMStr);
+      this.codeMasters.push(this.selectedCodeMStr);
+      this.masterService.saveOrUpdateCodeMasters(this.codeMasters);
       this.addAlert('success', 'Code Master added!!');
     } else if (
       this.masterType == 'CODE_VAL' ||
       (this.masterType == 'CODE' && this.editMode)
     ) {
-      this.masterService.updateCodeMaster(this.editedId, this.selectedCodeMStr);
+      this.codeMasters[this.editedId] = this.selectedCodeMStr;
+      this.masterService.saveOrUpdateCodeMasters(this.codeMasters);
       this.addAlert('success', 'Code Master/Value updated!!');
     }
   }

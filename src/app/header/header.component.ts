@@ -23,7 +23,7 @@ export class HeaderComponent {
   }
 
   onFetchData() {
-    this.dataStorageService.getRecipes();
+    // this.dataStorageService.getRecipes();
   }
 
   onLogout() {

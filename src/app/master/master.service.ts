@@ -1,53 +1,50 @@
+import { AppSettings } from './../shared/app-settings';
+import { Injectable, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+
+
 import { SysParam } from './sysparam.model';
 import { CodeMaster } from './codemaster.model';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable()
 export class MasterService {
+  sysparams;
+  codeMasters;
 
-  sysparams = [
-    new SysParam('BASE_CURRENCY', 'INR'),
-    new SysParam('COUNTRY', 'UAE'),
-    new SysParam('TIME_FORMAT', 'dd-MM-yyyy'),
-    new SysParam('MASK_CARD', 'true'),
-    new SysParam('SHOW_BALANCE', 'true'),
-    new SysParam('SHOW_CARD', 'true')
-  ];
+  constructor(private http: HttpClient) {}
 
-  codeMasters = [
-    new CodeMaster('CURRENCY', ['AED', 'INR', 'USD']),
-    new CodeMaster('ACTIONS', ['New', 'Edit'])
-  ];
   getSystemParams() {
-    return this.sysparams;
+    return this.http.get(AppSettings.DB_URL + AppSettings.SYS_PARAM_MST);
   }
+
+  saveOrUpdateSystemParameters(sysparams: SysParam[]) {
+    console.log('saving system param in database');
+    const response = this.http.put(
+      AppSettings.DB_URL + AppSettings.SYS_PARAM_MST,
+      sysparams
+    );
+    this.logResponse(response);
+  }
+
   getCodeMasters() {
-    return this.codeMasters;
+    return this.http.get(AppSettings.DB_URL + AppSettings.CODE_MST);
   }
 
-  updateSysParamMaster(id: number, sysParam: SysParam) {
-    this.sysparams[id] = sysParam;
+  saveOrUpdateCodeMasters(codeMasters: CodeMaster[]) {
+    console.log('saving code master in database');
+    const response = this.http.put(
+      AppSettings.DB_URL + AppSettings.CODE_MST,
+      codeMasters
+    );
+    this.logResponse(response);
   }
 
-  addSysParamMaster(sysParam: SysParam) {
-    this.sysparams.push(sysParam);
-  }
-
-  deleteSysParamMaster(index: number) {
-    this.sysparams.splice(index, 1);
-  }
-
-  updateCodeMaster(id: number, codeMaster: CodeMaster) {
-    this.codeMasters[id] = codeMaster;
-  }
-
-  addCodeMaster(codeMaster: CodeMaster) {
-    this.codeMasters.push(codeMaster);
-  }
-
-  deleteCodeMaster(index: number) {
-    this.codeMasters.splice(index, 1);
-  }
-
-  deleteCodeVal(index: number, codValIndex: number) {
-    this.codeMasters[index].codeValues.splice(codValIndex, 1);
+  logResponse(response: Observable<any>) {
+    response.subscribe(
+      response => console.log(response),
+      err => console.log(err)
+    );
   }
 
   getCodeMaster(code: string): CodeMaster {
