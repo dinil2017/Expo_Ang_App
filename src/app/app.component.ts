@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'expo-app';
+
+  ngOnInit() {
+    firebase.initializeApp({
+      apiKey: "AIzaSyCh-_QHgsd_hwY3Izal4WhxzsJFDaEIc4Q",
+      authDomain: "expo-dev.firebaseapp.com"
+    });
+  }
+
 }

@@ -1,6 +1,7 @@
 import { AppSettings } from './../shared/app-settings';
 import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
 
 import { SysParam } from './sysparam.model';
@@ -12,7 +13,7 @@ export class MasterService {
   sysparams;
   codeMasters;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getSystemParams() {
     return this.http.get(AppSettings.DB_URL + AppSettings.SYS_PARAM_MST);
@@ -47,21 +48,36 @@ export class MasterService {
     );
   }
 
-  getCodeMaster(code: string): CodeMaster {
-    for (let codeMstr of this.codeMasters) {
-      if (code === codeMstr.code) {
-        return codeMstr;
+  getCodeMaster(code: string): Observable<CodeMaster> {
+
+    return this.http.get(AppSettings.DB_URL + AppSettings.CODE_MST, {
+      observe: 'body',
+      responseType: 'json'
+    }).pipe(map(
+      (codemstrs: CodeMaster[]) => {        
+        for (let codemstr of codemstrs) {
+          if (codemstr.code == code) {
+            return codemstr;
+          }
+        }
       }
-    }
-    return null;
+    )
+    );
   }
 
-  getSystemParam(param: string): any {
-    for (let sysparam of this.sysparams) {
-      if (param === sysparam.param) {
-        return sysparam;
+  getSystemParam(param: string): Observable<SysParam> {
+    return this.http.get(AppSettings.DB_URL + AppSettings.SYS_PARAM_MST, {
+      observe: 'body',
+      responseType: 'json'
+    }).pipe(map(
+      (sysparams: SysParam[]) => {        
+        for (let sysparam of sysparams) {
+          if (sysparam.param == param) {
+            return sysparam;
+          }
+        }
       }
-    }
-    return null;
+    )
+    );
   }
 }

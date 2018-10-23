@@ -37,14 +37,19 @@ export class AccountEditComponent implements OnInit {
   }
   initForm() {
 
-    const currencyCodeMst: CodeMaster = this.masterService.getCodeMaster('CURRENCY');
-    currencyCodeMst.codeValues.forEach(codeval => {
-      this.currencyOptions.push(codeval);
+    this.masterService.getCodeMaster('CURRENCY')
+    .subscribe(
+        (data: CodeMaster) => {                  
+          data.codeValues.forEach(codeval => {
+            this.currencyOptions.push(codeval);
+          }
+      );
     });
 
-    const baseCurrency: SysParam = this.masterService.getSystemParam('BASE_CURRENCY');
-    console.log(baseCurrency);
-    this.defaultCurrency = baseCurrency.value;
+    this.masterService.getSystemParam('BASE_CURRENCY')
+    .subscribe(
+      (data: SysParam) =>  this.defaultCurrency = data.value
+    );        
 
     let _name = '';
     let _balance: number;
