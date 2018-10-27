@@ -5,6 +5,8 @@ import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthService } from './auth.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from '../shared/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -16,8 +18,8 @@ import { AuthService } from './auth.service';
     AuthRoutingModule
   ],
   providers: [
-    AuthService
-    // {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+    AuthService,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ]
 })
 export class AuthModule {}
